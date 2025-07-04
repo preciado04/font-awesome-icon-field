@@ -6,6 +6,37 @@
 (function ($, Drupal, drupalSettings) {
   'use strict';
 
+  /**
+   * Wrapper for Drupal's once implementation.
+   *
+   * Ensures compatibility between jQuery.once and the
+   * once() utility introduced in Drupal 9.3 and used in
+   * Drupal 10+.
+   *
+   * @param {string} id
+   *   The unique identifier used by once.
+   * @param {string} selector
+   *   The selector for the elements.
+   * @param {Element|Document} [context=document]
+   *   Optional context element.
+   *
+   * @return {jQuery}
+   *   A jQuery object containing the matched elements.
+   */
+  function onceWrapper(id, selector, context) {
+    context = context || document;
+
+    if ($.fn.once) {
+      return $(selector, context).once(id);
+    }
+
+    if (typeof once === 'function') {
+      return $(once(id, selector, context));
+    }
+
+    return $(selector, context);
+  }
+
   // Set value to current page variable.
   var current_page = 1;
   // Set value to left variable.
@@ -17,7 +48,7 @@
 
   Drupal.behaviors.iconPicker = {
     attach: function (context, settings) {
-      $('html', context).once('body').each(function (i, item) {
+      onceWrapper('body', 'html', context).each(function (i, item) {
         // Add description to Font Awesome Icon field.
         var link = '<a href="https://fontawesome.com/v4.7/icons" target="_blank">Font Awesome icon list</a>';
         var description_text = 'Font Awesome icon name. See the ' + link + ' for valid names, or '
