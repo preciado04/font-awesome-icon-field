@@ -25,7 +25,7 @@ class FontAwesomeIconFormatter extends FormatterBase {
     $elements = [];
 
     foreach ($items as $delta => $item) {
-      $icon = isset($item->getValue('values')['value']) ? $item->getValue('values')['value'] : '';
+      $icon = $item->get('value')->getValue();
       $elements[$delta] = [
         '#theme' => 'fontawesome_icon_formatter',
         '#icon' => $icon,
