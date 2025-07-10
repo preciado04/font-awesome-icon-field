@@ -14,58 +14,38 @@
 
 .icons {
   width: 440px;
-  height: 456px;
   margin-top: 30px;
+  display: flex;
+  flex-wrap: wrap;
   overflow: hidden;
-  position: absolute;
-  top: -30px;
-  left: 0;
 }
 
 .icons-wrapper div.page {
-  opacity: 0;
-  transition: opacity ease-in-out .6s;
-  position: absolute;
-  top: 0;
-  left: 0;
+  display: none;
+  width: 100%;
 }
 
 .icons-wrapper div.page.active {
-  opacity: 1;
-  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .pagination-items {
-  position: absolute;
-  top: 464px;
-  left: 43px;
-  transition: top ease-in-out .5s;
+  margin-top: 8px;
 }
 
 .icons-wrapper .pager {
-  position: absolute;
-  top: 0;
-  left: 108px;
-  overflow: hidden;
-  width: 134px;
-  height: 30px;
-  transition: width ease-in-out .6s, left ease-in-out .6s;
+  display: inline-block;
 }
 
 .icons-wrapper ul.pagination {
   margin: 0;
   padding: 0;
-  overflow: hidden;
-  position: absolute;
-  top: 0;
-  left: -13px;
-  width: 200000px;
-  transition: left ease-in-out .6s;
+  list-style: none;
 }
 
 .icons-wrapper ul.pagination li {
-  display: inline;
-  position: relative;
+  display: inline-block;
 }
 
 .icons-wrapper ul.pagination li a {
@@ -77,15 +57,9 @@
 .icons-wrapper a.fa-icon {
   width: 110px;
   height: 110px;
-  display: inline-block;
-  position: relative;
-}
-
-.icons-wrapper a.fa-icon i {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .icons-wrapper a.prev,
@@ -167,12 +141,10 @@
 
 table .form-item.icons-active {
   position: relative;
-  padding-bottom: 525px;
 }
 
 table .form-item.autocomplete-active {
   position: relative;
-  padding-bottom: 515px;
 }
 
 .autocomplete-wrapper {
