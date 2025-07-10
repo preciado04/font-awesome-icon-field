@@ -14,7 +14,7 @@
 
 .icons {
   width: 440px;
-  height: 456px;
+  height: 458px;
   margin-top: 30px;
   overflow: hidden;
   position: absolute;
@@ -47,9 +47,11 @@
   top: 0;
   left: 108px;
   overflow: hidden;
-  width: 134px;
+  width: 144px;
   height: 30px;
   transition: width ease-in-out .6s, left ease-in-out .6s;
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
 .icons-wrapper ul.pagination {
@@ -145,7 +147,8 @@
   cursor: not-allowed;
 }
 
-.icons-wrapper ul.pagination li.active a.go-to-page:before {
+.icons-wrapper ul.pagination li.active a.go-to-page:before,
+.icons-wrapper ul.pagination li a.go-to-page:hover:before {
   content: '';
   width: 22px;
   height: 22px;
@@ -158,19 +161,19 @@
 }
 
 .icons-wrapper ul.pagination li.active a {
-  margin-left: 11px;
+  margin-left: 12px;
 }
 
 .icons-wrapper i:before {
   font-size: 25px;
 }
 
-table .form-item.icons-active {
+.form-item[class*="field-font-awesome-icon"].icons-active {
   position: relative;
   padding-bottom: 525px;
 }
 
-table .form-item.autocomplete-active {
+.form-item[class*="field-font-awesome-icon"].autocomplete-active {
   position: relative;
   padding-bottom: 515px;
 }
@@ -217,8 +220,20 @@ input[size="10000"] + .description > a:focus {
 .autocomplete-wrapper a.go-to-page,
 .icons-wrapper a.go-to-page {
   font-family: 'hind-siliguri-regular';
+  box-shadow: none;
 }
 
 .autocomplete-wrapper .fa-icon {
   font-size: 16px;
+}
+
+.icons-wrapper a.fa-icon {
+  border: 1px solid transparent;
+  box-sizing: border-box;
+}
+
+.icons-wrapper a.fa-icon:hover,
+.icons-wrapper a.fa-icon:focus {
+  border-color: inherit;
+  box-shadow: none;
 }

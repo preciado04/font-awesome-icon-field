@@ -1099,7 +1099,7 @@
               $(icon_field).find('a.next').css('left', '263px');
               $(icon_field).find('a.angle-double-right').css('left', '313px');
               $(icon_field).find('.pager').css('left', '108px');
-              $(icon_field).find('.pager').css('width', '134px');
+              $(icon_field).find('.pager').css('width', '144px');
               $(icon_field).find('ul.pagination').css('left', '-13px');
               $(icon_field).find('.pagination-items').css('top', '464px');
               break;
@@ -1110,7 +1110,7 @@
               $(icon_field).find('a.next').css('left', '267px');
               $(icon_field).find('a.angle-double-right').css('left', '317px');
               $(icon_field).find('.pager').css('left', '108px');
-              $(icon_field).find('.pager').css('width', '137px');
+              $(icon_field).find('.pager').css('width', '147px');
               $(icon_field).find('ul.pagination').css('left', '-41px');
               $(icon_field).find('.pagination-items').css('top', '464px');
               break;
@@ -1121,7 +1121,7 @@
               $(icon_field).find('a.next').css('left', '265px');
               $(icon_field).find('a.angle-double-right').css('left', '315px');
               $(icon_field).find('.pager').css('left', '108px');
-              $(icon_field).find('.pager').css('width', '136px');
+              $(icon_field).find('.pager').css('width', '146px');
               $(icon_field).find('ul.pagination').css('left', '-71px');
               $(icon_field).find('.pagination-items').css('top', '464px');
               break;
@@ -1132,7 +1132,7 @@
               $(icon_field).find('a.next').css('left', '263px');
               $(icon_field).find('a.angle-double-right').css('left', '313px');
               $(icon_field).find('.pager').css('left', '106px');
-              $(icon_field).find('.pager').css('width', '136px');
+              $(icon_field).find('.pager').css('width', '146px');
               $(icon_field).find('ul.pagination').css('left', '-101px');
               $(icon_field).find('.pagination-items').css('top', '464px');
               break;
@@ -1143,7 +1143,7 @@
               $(icon_field).find('a.next').css('left', '266px');
               $(icon_field).find('a.angle-double-right').css('left', '316px');
               $(icon_field).find('.pager').css('left', '109px');
-              $(icon_field).find('.pager').css('width', '137px');
+              $(icon_field).find('.pager').css('width', '147px');
               $(icon_field).find('ul.pagination').css('left', '-131px');
               $(icon_field).find('.pagination-items').css('top', '464px');
               break;
@@ -1528,7 +1528,7 @@
               $(icon_field).find('a.next').css('left', '263px');
               $(icon_field).find('a.angle-double-right').css('left', '313px');
               $(icon_field).find('.pager').css('left', '110px');
-              $(icon_field).find('.pager').css('width', '133px');
+              $(icon_field).find('.pager').css('width', '143px');
               $(icon_field).find('ul.pagination').css('left', '-1387px');
               $(icon_field).find('.pagination-items').css('top', '464px');
               break;
