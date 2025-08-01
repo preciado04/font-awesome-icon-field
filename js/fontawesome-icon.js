@@ -1,6 +1,9 @@
 /**
  * @file
- * This is fontawesome-iconpicker.js file.
+ * Provides behavior for Font Awesome icons integration.
+ *
+ * This file contains JavaScript related to Font Awesome icon functionality
+ * used in the Drupal frontend.
  */
 
 (function ($, Drupal, drupalSettings) {
@@ -37,19 +40,14 @@
     return $(selector, context);
   }
 
-  // Set value to current page variable.
   var current_page = 1;
-  // Set value to left variable.
   var left = 0;
-  // Declare fa_clases variable.
   var fa_clases = [];
-  // Set value to attributes_added variable.
   var attributes_added = true;
 
   Drupal.behaviors.iconPicker = {
     attach: function (context, settings) {
       onceWrapper('body', 'html', context).each(function (i, item) {
-        // Add description to Font Awesome Icon field.
         var link = '<a href="https://fontawesome.com/v4.7/icons" target="_blank">Font Awesome icon list</a>';
         var description_text = 'Font Awesome icon name. See the ' + link + ' for valid names, or '
                                 + 'start typing something for an autocomplete list. Also you can select '
@@ -57,18 +55,14 @@
         var description = '<div class="description">' + description_text + '</div>';
         $('input[size="10000"]').parent().append(description);
 
-        // Add icons and pagination.
         addIconsAndPagination();
 
-        // Function to add an autocompleate on field Font Awesome Icon.
         $(document).on('keyup', 'input[size="10000"]', function () {
-          // Remove autocomplete wrapper.
           $('.autocomplete-wrapper').remove();
-          // Remove class active.
           $(this).parent().removeClass('autocomplete-active');
-          // Create autocomplete markup.
           var autocomplete_items = '<div class="autocomplete-wrapper"><ul class="autocomplete-items">';
           var string = $(this).val();
+
           $.each(fa_clases, function (i, item) {
             var match = item.search(string);
             if (match > 0) {
@@ -77,14 +71,12 @@
             }
           });
           autocomplete_items += '</ul></div>';
-          // Add autocomplete markup.
+
           $(this).after(autocomplete_items);
-          // Add class active.
           $(this).parent().addClass('autocomplete-active');
+
           if (!$('.autocomplete-wrapper').text()) {
-            // Remove autocomplete markup.
             $('.autocomplete-wrapper').remove();
-            // Remove class active.
             $(this).parent().removeClass('autocomplete-active');
           }
         });
@@ -95,18 +87,15 @@
         $(document).on('click', '.autocomplete-wrapper a.fa-icon, .icons-wrapper a.fa-icon', function (e) {
           e.preventDefault();
 
-          // Get reference for input Font Awesome Icon.
           var font_awesome_icon_input = $(this).parent().parent().parent().parent().find('input[size="10000"]');
-          // Get string value.
           var string = $(this).text();
+
           if ($(this).data('string')) {
             string = $(this).data('string');
           }
-          // Add string value to input Font Awesome Icon.
+
           $(font_awesome_icon_input).val(string);
-          // Remove autocomplete markup.
           $('.autocomplete-wrapper').remove();
-          // Remove class active.
           $('input[size="10000"]').parent().removeClass('autocomplete-active');
         });
 
@@ -114,7 +103,6 @@
          * Function to add icons and pagination.
          */
         function addIconsAndPagination() {
-          // Add font awesome classes to array variable.
           var array = [
             'fa-glass',
             'fa-music',
@@ -793,12 +781,10 @@
             'fa-meetup'
           ];
 
-          // Push values to fa_clases array.
           $.each(array, function (i, item) {
             fa_clases.push(item);
           });
 
-          // Create markup.
           var markup = '';
           var count = 0;
           var pager_count = 1;
@@ -822,7 +808,6 @@
           });
           markup += '</div></div>';
 
-          // Add pager to markup.
           markup += '<div class="pagination-items">';
           markup += '<a href="#" data-go-to-page="false" class="go-to-page angle-double-left" disabled="disabled"><i class="fa fa-angle-double-left"></i></a>';
           markup += '<a href="#" data-go-to-page="false" class="go-to-page prev" disabled="disabled">Prev</a>';
@@ -876,14 +861,11 @@
           markup += '</ul>';
           markup += '</div></div>';
 
-          // Add markup to parent element.
           var parent = $('input[size="10000"]').parent();
           if (!$(parent).find('.icons-wrapper').length) {
             $(parent).append(markup);
-            // Add clases to elements.
             $(parent).addClass('icons-active');
             $('.page-1').addClass('active');
-            // Add data to icon field.
             $(parent).attr('data-current-page', current_page);
           }
         }
@@ -894,11 +876,9 @@
         $(document).on('click', 'a.angle-double-left', function (e) {
           e.preventDefault();
 
-          // Get icon field.
           var icon_field = $(this).parent().parent().parent();
-          // Get current page value.
           current_page = parseInt($(icon_field).attr('data-current-page'), 10);
-          // Update current page value.
+
           if (current_page == 2) {
             current_page = current_page - 1;
           }
@@ -917,15 +897,11 @@
           else {
             current_page = current_page - 5;
           }
-          // Remove active class to current page.
+
           $(icon_field).find('.page.active').removeClass('active');
-          // Add active class to current page.
           $(icon_field).find('.page-' + current_page).addClass('active');
-          // Update current page on icon field.
           $(icon_field).attr('data-current-page', current_page);
-          // Update pagination item styles.
           updatePaginationItemStyles(icon_field);
-          // Add disabled attribute to links.
           if (current_page == 1 && attributes_added == false) {
             $('a.angle-double-left, a.prev').attr('disabled', 'disabled');
             attributes_added = true;
@@ -946,28 +922,21 @@
             return false;
           }
 
-          // Get icon field.
           var icon_field = $(this).parent().parent().parent();
-          // Get current page value.
           current_page = parseInt($(icon_field).attr('data-current-page'), 10);
-          // Set value to variable next_page.
           var prev_page = current_page - 1;
-          // Update value on variable current_page.
           current_page = prev_page;
-          // Remove active class to current page.
           $(icon_field).find('.page.active').removeClass('active');
-          // Add active class to prev page.
           $(icon_field).find('.page-' + prev_page).addClass('active');
-          // Update current page on icon field.
           $(icon_field).attr('data-current-page', current_page);
-          // Update pagination item styles.
+
           updatePaginationItemStyles(icon_field);
-          // Add disabled attribute from links.
+
           if (current_page == 1 && attributes_added == false) {
             $('a.angle-double-left, a.prev').attr('disabled', 'disabled');
             attributes_added = true;
           }
-          // Remove disabled attribute from links.
+
           if (current_page == 42 && attributes_added == true) {
             $('a.next, a.angle-double-right').removeAttr('disabled');
             attributes_added = false;
@@ -980,28 +949,21 @@
         $(document).on('click', 'a.next', function (e) {
           e.preventDefault();
 
-          // Get icon field.
           var icon_field = $(this).parent().parent().parent();
-          // Get current page value.
           current_page = parseInt($(icon_field).attr('data-current-page'), 10);
-          // Set value to variable next_page.
           var next_page = current_page + 1;
-          // Update value on variable current_page.
           current_page = next_page;
-          // Remove active class to current page.
           $(icon_field).find('.page.active').removeClass('active');
-          // Add active class to next page.
           $(icon_field).find('.page-' + next_page).addClass('active');
-          // Update current page on icon field.
           $(icon_field).attr('data-current-page', current_page);
-          // Update pagination item styles.
+
           updatePaginationItemStyles(icon_field);
-          // Remove disabled attribute to links.
+
           if (attributes_added == true) {
             $('a.angle-double-left, a.prev').removeAttr('disabled');
             attributes_added = false;
           }
-          // Add disabled attribute to links.
+
           if (current_page == 43 && attributes_added == false) {
             $('a.next, a.angle-double-right').attr('disabled', 'disabled');
             attributes_added = true;
@@ -1014,11 +976,8 @@
         $(document).on('click', 'a.angle-double-right', function (e) {
           e.preventDefault();
 
-          // Get icon field.
           var icon_field = $(this).parent().parent().parent();
-          // Get current page value.
           current_page = parseInt($(icon_field).attr('data-current-page'), 10);
-          // Update current page value.
           if (current_page == 41) {
             current_page = current_page + 2;
           }
@@ -1028,20 +987,18 @@
           else {
             current_page = current_page + 5;
           }
-          // Remove active class to current page.
+
           $(icon_field).find('.page.active').removeClass('active');
-          // Add active class to current page.
           $(icon_field).find('.page-' + current_page).addClass('active');
-          // Update current page on icon field.
           $(icon_field).attr('data-current-page', current_page);
-          // Update pagination item styles.
+
           updatePaginationItemStyles(icon_field);
-          // Remove disabled attribute to links.
+
           if (current_page > 1 && attributes_added == true) {
             $('a.go-to-page').removeAttr('disabled');
             attributes_added = false;
           }
-          // Add disabled attribute to links.
+
           if (current_page == 43 && attributes_added == false) {
             $('a.next, a.angle-double-right').attr('disabled', 'disabled');
             attributes_added = true;
@@ -1054,33 +1011,25 @@
         $(document).on('click', 'a.go-to-page', function (e) {
           e.preventDefault();
 
-          // Return false in case data go to page is false.
           if ($(this).data('go-to-page') == false) {
             return false;
           }
 
-          // Get icon field.
           var icon_field = $(this).parent().parent().parent().parent().parent().parent();
-          // Get current page value.
           current_page = parseInt($(icon_field).attr('data-current-page'), 10);
-          // Get new page value.
           var new_page = parseInt($(this).text(), 10);
-          // Update current page value.
           current_page = new_page;
-          // Remove active class to current page.
           $(icon_field).find('.page.active').removeClass('active');
-          // Add active class to new page.
           $(icon_field).find('.page-' + current_page).addClass('active');
-          // Update current page on icon field.
           $(icon_field).attr('data-current-page', current_page);
-          // Update pagination item styles.
+
           updatePaginationItemStyles(icon_field);
-          // Remove disabled attribute from links.
+
           if (current_page > 1 && attributes_added == true) {
             $('a.go-to-page').removeAttr('disabled');
             attributes_added = false;
           }
-          // Add disabled attribute to links.
+
           if (current_page == 43 && attributes_added == false) {
             $('a.next, a.angle-double-right').attr('disabled', 'disabled');
             attributes_added = true;
@@ -1091,7 +1040,6 @@
          * Function to update pagination item styles.
          */
         function updatePaginationItemStyles(icon_field) {
-          // Update styles based on current page value.
           switch (current_page) {
             case 1:
               $(icon_field).find('a.angle-double-left').css('left', '24px');
