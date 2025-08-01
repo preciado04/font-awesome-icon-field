@@ -1,0 +1,8 @@
+{
+  "name": "font-awesome-icon-field",
+  "version": "1.0.0",
+  "description": "Drupal module Font Awesome Icon Field",
+  "scripts": {
+    "test": "echo \"No tests specified\" && exit 0"
+  }
+}

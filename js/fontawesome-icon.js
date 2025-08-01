@@ -1,6 +1,9 @@
 /**
  * @file
- * This is fontawesome-iconpicker.js file.
+ * Provides behavior for Font Awesome icons integration.
+ *
+ * This file contains JavaScript related to Font Awesome icon functionality
+ * used in the Drupal frontend.
  */
 
 (function ($, Drupal, drupalSettings) {
@@ -37,19 +40,14 @@
     return $(selector, context);
   }
 
-  // Set value to current page variable.
   var current_page = 1;
-  // Set value to left variable.
   var left = 0;
-  // Declare fa_clases variable.
   var fa_clases = [];
-  // Set value to attributes_added variable.
   var attributes_added = true;
 
   Drupal.behaviors.iconPicker = {
     attach: function (context, settings) {
       onceWrapper('body', 'html', context).each(function (i, item) {
-        // Add description to Font Awesome Icon field.
         var link = '<a href="https://fontawesome.com/v4.7/icons" target="_blank">Font Awesome icon list</a>';
         var description_text = 'Font Awesome icon name. See the ' + link + ' for valid names, or '
                                 + 'start typing something for an autocomplete list. Also you can select '
@@ -57,18 +55,14 @@
         var description = '<div class="description">' + description_text + '</div>';
         $('input[size="10000"]').parent().append(description);
 
-        // Add icons and pagination.
         addIconsAndPagination();
 
-        // Function to add an autocompleate on field Font Awesome Icon.
         $(document).on('keyup', 'input[size="10000"]', function () {
-          // Remove autocomplete wrapper.
           $('.autocomplete-wrapper').remove();
-          // Remove class active.
           $(this).parent().removeClass('autocomplete-active');
-          // Create autocomplete markup.
           var autocomplete_items = '<div class="autocomplete-wrapper"><ul class="autocomplete-items">';
           var string = $(this).val();
+
           $.each(fa_clases, function (i, item) {
             var match = item.search(string);
             if (match > 0) {
@@ -77,14 +71,12 @@
             }
           });
           autocomplete_items += '</ul></div>';
-          // Add autocomplete markup.
+
           $(this).after(autocomplete_items);
-          // Add class active.
           $(this).parent().addClass('autocomplete-active');
+
           if (!$('.autocomplete-wrapper').text()) {
-            // Remove autocomplete markup.
             $('.autocomplete-wrapper').remove();
-            // Remove class active.
             $(this).parent().removeClass('autocomplete-active');
           }
         });
@@ -95,18 +87,15 @@
         $(document).on('click', '.autocomplete-wrapper a.fa-icon, .icons-wrapper a.fa-icon', function (e) {
           e.preventDefault();
 
-          // Get reference for input Font Awesome Icon.
           var font_awesome_icon_input = $(this).parent().parent().parent().parent().find('input[size="10000"]');
-          // Get string value.
           var string = $(this).text();
+
           if ($(this).data('string')) {
             string = $(this).data('string');
           }
-          // Add string value to input Font Awesome Icon.
+
           $(font_awesome_icon_input).val(string);
-          // Remove autocomplete markup.
           $('.autocomplete-wrapper').remove();
-          // Remove class active.
           $('input[size="10000"]').parent().removeClass('autocomplete-active');
         });
 
@@ -114,7 +103,6 @@
          * Function to add icons and pagination.
          */
         function addIconsAndPagination() {
-          // Add font awesome classes to array variable.
           var array = [
             'fa-glass',
             'fa-music',
@@ -793,12 +781,10 @@
             'fa-meetup'
           ];
 
-          // Push values to fa_clases array.
           $.each(array, function (i, item) {
             fa_clases.push(item);
           });
 
-          // Create markup.
           var markup = '';
           var count = 0;
           var pager_count = 1;
@@ -822,7 +808,6 @@
           });
           markup += '</div></div>';
 
-          // Add pager to markup.
           markup += '<div class="pagination-items">';
           markup += '<a href="#" data-go-to-page="false" class="go-to-page angle-double-left" disabled="disabled"><i class="fa fa-angle-double-left"></i></a>';
           markup += '<a href="#" data-go-to-page="false" class="go-to-page prev" disabled="disabled">Prev</a>';
@@ -876,14 +861,11 @@
           markup += '</ul>';
           markup += '</div></div>';
 
-          // Add markup to parent element.
           var parent = $('input[size="10000"]').parent();
           if (!$(parent).find('.icons-wrapper').length) {
             $(parent).append(markup);
-            // Add clases to elements.
             $(parent).addClass('icons-active');
             $('.page-1').addClass('active');
-            // Add data to icon field.
             $(parent).attr('data-current-page', current_page);
           }
         }
@@ -894,11 +876,9 @@
         $(document).on('click', 'a.angle-double-left', function (e) {
           e.preventDefault();
 
-          // Get icon field.
           var icon_field = $(this).parent().parent().parent();
-          // Get current page value.
           current_page = parseInt($(icon_field).attr('data-current-page'), 10);
-          // Update current page value.
+
           if (current_page == 2) {
             current_page = current_page - 1;
           }
@@ -917,15 +897,11 @@
           else {
             current_page = current_page - 5;
           }
-          // Remove active class to current page.
+
           $(icon_field).find('.page.active').removeClass('active');
-          // Add active class to current page.
           $(icon_field).find('.page-' + current_page).addClass('active');
-          // Update current page on icon field.
           $(icon_field).attr('data-current-page', current_page);
-          // Update pagination item styles.
           updatePaginationItemStyles(icon_field);
-          // Add disabled attribute to links.
           if (current_page == 1 && attributes_added == false) {
             $('a.angle-double-left, a.prev').attr('disabled', 'disabled');
             attributes_added = true;
@@ -946,28 +922,21 @@
             return false;
           }
 
-          // Get icon field.
           var icon_field = $(this).parent().parent().parent();
-          // Get current page value.
           current_page = parseInt($(icon_field).attr('data-current-page'), 10);
-          // Set value to variable next_page.
           var prev_page = current_page - 1;
-          // Update value on variable current_page.
           current_page = prev_page;
-          // Remove active class to current page.
           $(icon_field).find('.page.active').removeClass('active');
-          // Add active class to prev page.
           $(icon_field).find('.page-' + prev_page).addClass('active');
-          // Update current page on icon field.
           $(icon_field).attr('data-current-page', current_page);
-          // Update pagination item styles.
+
           updatePaginationItemStyles(icon_field);
-          // Add disabled attribute from links.
+
           if (current_page == 1 && attributes_added == false) {
             $('a.angle-double-left, a.prev').attr('disabled', 'disabled');
             attributes_added = true;
           }
-          // Remove disabled attribute from links.
+
           if (current_page == 42 && attributes_added == true) {
             $('a.next, a.angle-double-right').removeAttr('disabled');
             attributes_added = false;
@@ -980,28 +949,21 @@
         $(document).on('click', 'a.next', function (e) {
           e.preventDefault();
 
-          // Get icon field.
           var icon_field = $(this).parent().parent().parent();
-          // Get current page value.
           current_page = parseInt($(icon_field).attr('data-current-page'), 10);
-          // Set value to variable next_page.
           var next_page = current_page + 1;
-          // Update value on variable current_page.
           current_page = next_page;
-          // Remove active class to current page.
           $(icon_field).find('.page.active').removeClass('active');
-          // Add active class to next page.
           $(icon_field).find('.page-' + next_page).addClass('active');
-          // Update current page on icon field.
           $(icon_field).attr('data-current-page', current_page);
-          // Update pagination item styles.
+
           updatePaginationItemStyles(icon_field);
-          // Remove disabled attribute to links.
+
           if (attributes_added == true) {
             $('a.angle-double-left, a.prev').removeAttr('disabled');
             attributes_added = false;
           }
-          // Add disabled attribute to links.
+
           if (current_page == 43 && attributes_added == false) {
             $('a.next, a.angle-double-right').attr('disabled', 'disabled');
             attributes_added = true;
@@ -1014,11 +976,8 @@
         $(document).on('click', 'a.angle-double-right', function (e) {
           e.preventDefault();
 
-          // Get icon field.
           var icon_field = $(this).parent().parent().parent();
-          // Get current page value.
           current_page = parseInt($(icon_field).attr('data-current-page'), 10);
-          // Update current page value.
           if (current_page == 41) {
             current_page = current_page + 2;
           }
@@ -1028,20 +987,18 @@
           else {
             current_page = current_page + 5;
           }
-          // Remove active class to current page.
+
           $(icon_field).find('.page.active').removeClass('active');
-          // Add active class to current page.
           $(icon_field).find('.page-' + current_page).addClass('active');
-          // Update current page on icon field.
           $(icon_field).attr('data-current-page', current_page);
-          // Update pagination item styles.
+
           updatePaginationItemStyles(icon_field);
-          // Remove disabled attribute to links.
+
           if (current_page > 1 && attributes_added == true) {
             $('a.go-to-page').removeAttr('disabled');
             attributes_added = false;
           }
-          // Add disabled attribute to links.
+
           if (current_page == 43 && attributes_added == false) {
             $('a.next, a.angle-double-right').attr('disabled', 'disabled');
             attributes_added = true;
@@ -1054,33 +1011,25 @@
         $(document).on('click', 'a.go-to-page', function (e) {
           e.preventDefault();
 
-          // Return false in case data go to page is false.
           if ($(this).data('go-to-page') == false) {
             return false;
           }
 
-          // Get icon field.
           var icon_field = $(this).parent().parent().parent().parent().parent().parent();
-          // Get current page value.
           current_page = parseInt($(icon_field).attr('data-current-page'), 10);
-          // Get new page value.
           var new_page = parseInt($(this).text(), 10);
-          // Update current page value.
           current_page = new_page;
-          // Remove active class to current page.
           $(icon_field).find('.page.active').removeClass('active');
-          // Add active class to new page.
           $(icon_field).find('.page-' + current_page).addClass('active');
-          // Update current page on icon field.
           $(icon_field).attr('data-current-page', current_page);
-          // Update pagination item styles.
+
           updatePaginationItemStyles(icon_field);
-          // Remove disabled attribute from links.
+
           if (current_page > 1 && attributes_added == true) {
             $('a.go-to-page').removeAttr('disabled');
             attributes_added = false;
           }
-          // Add disabled attribute to links.
+
           if (current_page == 43 && attributes_added == false) {
             $('a.next, a.angle-double-right').attr('disabled', 'disabled');
             attributes_added = true;
@@ -1091,7 +1040,6 @@
          * Function to update pagination item styles.
          */
         function updatePaginationItemStyles(icon_field) {
-          // Update styles based on current page value.
           switch (current_page) {
             case 1:
               $(icon_field).find('a.angle-double-left').css('left', '24px');
@@ -1099,7 +1047,7 @@
               $(icon_field).find('a.next').css('left', '263px');
               $(icon_field).find('a.angle-double-right').css('left', '313px');
               $(icon_field).find('.pager').css('left', '108px');
-              $(icon_field).find('.pager').css('width', '134px');
+              $(icon_field).find('.pager').css('width', '144px');
               $(icon_field).find('ul.pagination').css('left', '-13px');
               $(icon_field).find('.pagination-items').css('top', '464px');
               break;
@@ -1110,7 +1058,7 @@
               $(icon_field).find('a.next').css('left', '267px');
               $(icon_field).find('a.angle-double-right').css('left', '317px');
               $(icon_field).find('.pager').css('left', '108px');
-              $(icon_field).find('.pager').css('width', '137px');
+              $(icon_field).find('.pager').css('width', '147px');
               $(icon_field).find('ul.pagination').css('left', '-41px');
               $(icon_field).find('.pagination-items').css('top', '464px');
               break;
@@ -1121,7 +1069,7 @@
               $(icon_field).find('a.next').css('left', '265px');
               $(icon_field).find('a.angle-double-right').css('left', '315px');
               $(icon_field).find('.pager').css('left', '108px');
-              $(icon_field).find('.pager').css('width', '136px');
+              $(icon_field).find('.pager').css('width', '146px');
               $(icon_field).find('ul.pagination').css('left', '-71px');
               $(icon_field).find('.pagination-items').css('top', '464px');
               break;
@@ -1132,7 +1080,7 @@
               $(icon_field).find('a.next').css('left', '263px');
               $(icon_field).find('a.angle-double-right').css('left', '313px');
               $(icon_field).find('.pager').css('left', '106px');
-              $(icon_field).find('.pager').css('width', '136px');
+              $(icon_field).find('.pager').css('width', '146px');
               $(icon_field).find('ul.pagination').css('left', '-101px');
               $(icon_field).find('.pagination-items').css('top', '464px');
               break;
@@ -1143,7 +1091,7 @@
               $(icon_field).find('a.next').css('left', '266px');
               $(icon_field).find('a.angle-double-right').css('left', '316px');
               $(icon_field).find('.pager').css('left', '109px');
-              $(icon_field).find('.pager').css('width', '137px');
+              $(icon_field).find('.pager').css('width', '147px');
               $(icon_field).find('ul.pagination').css('left', '-131px');
               $(icon_field).find('.pagination-items').css('top', '464px');
               break;
@@ -1154,7 +1102,7 @@
               $(icon_field).find('a.next').css('left', '268px');
               $(icon_field).find('a.angle-double-right').css('left', '318px');
               $(icon_field).find('.pager').css('left', '106px');
-              $(icon_field).find('.pager').css('width', '141px');
+              $(icon_field).find('.pager').css('width', '151px');
               $(icon_field).find('ul.pagination').css('left', '-162px');
               $(icon_field).find('.pagination-items').css('top', '464px');
               break;
@@ -1165,7 +1113,7 @@
               $(icon_field).find('a.next').css('left', '269px');
               $(icon_field).find('a.angle-double-right').css('left', '319px');
               $(icon_field).find('.pager').css('left', '104px');
-              $(icon_field).find('.pager').css('width', '144px');
+              $(icon_field).find('.pager').css('width', '154px');
               $(icon_field).find('ul.pagination').css('left', '-191px');
               $(icon_field).find('.pagination-items').css('top', '464px');
               break;
@@ -1176,7 +1124,7 @@
               $(icon_field).find('a.next').css('left', '272px');
               $(icon_field).find('a.angle-double-right').css('left', '322px');
               $(icon_field).find('.pager').css('left', '101px');
-              $(icon_field).find('.pager').css('width', '150px');
+              $(icon_field).find('.pager').css('width', '160px');
               $(icon_field).find('ul.pagination').css('left', '-221px');
               $(icon_field).find('.pagination-items').css('top', '464px');
               break;
@@ -1187,7 +1135,7 @@
               $(icon_field).find('a.next').css('left', '274px');
               $(icon_field).find('a.angle-double-right').css('left', '324px');
               $(icon_field).find('.pager').css('left', '100px');
-              $(icon_field).find('.pager').css('width', '153px');
+              $(icon_field).find('.pager').css('width', '163px');
               $(icon_field).find('ul.pagination').css('left', '-252px');
               $(icon_field).find('.pagination-items').css('top', '464px');
               break;
@@ -1198,7 +1146,7 @@
               $(icon_field).find('a.next').css('left', '275px');
               $(icon_field).find('a.angle-double-right').css('left', '325px');
               $(icon_field).find('.pager').css('left', '98px');
-              $(icon_field).find('.pager').css('width', '156px');
+              $(icon_field).find('.pager').css('width', '166px');
               $(icon_field).find('ul.pagination').css('left', '-285px');
               $(icon_field).find('.pagination-items').css('top', '464px');
               break;
@@ -1209,7 +1157,7 @@
               $(icon_field).find('a.next').css('left', '275px');
               $(icon_field).find('a.angle-double-right').css('left', '325px');
               $(icon_field).find('.pager').css('left', '97px');
-              $(icon_field).find('.pager').css('width', '157px');
+              $(icon_field).find('.pager').css('width', '167px');
               $(icon_field).find('ul.pagination').css('left', '-319px');
               $(icon_field).find('.pagination-items').css('top', '464px');
               break;
@@ -1220,7 +1168,7 @@
               $(icon_field).find('a.next').css('left', '273px');
               $(icon_field).find('a.angle-double-right').css('left', '323px');
               $(icon_field).find('.pager').css('left', '92px');
-              $(icon_field).find('.pager').css('width', '160px');
+              $(icon_field).find('.pager').css('width', '170px');
               $(icon_field).find('ul.pagination').css('left', '-352px');
               $(icon_field).find('.pagination-items').css('top', '464px');
               break;
@@ -1231,7 +1179,7 @@
               $(icon_field).find('a.next').css('left', '277px');
               $(icon_field).find('a.angle-double-right').css('left', '327px');
               $(icon_field).find('.pager').css('left', '96px');
-              $(icon_field).find('.pager').css('width', '160px');
+              $(icon_field).find('.pager').css('width', '170px');
               $(icon_field).find('ul.pagination').css('left', '-387px');
               $(icon_field).find('.pagination-items').css('top', '464px');
               break;
@@ -1242,7 +1190,7 @@
               $(icon_field).find('a.next').css('left', '279px');
               $(icon_field).find('a.angle-double-right').css('left', '329px');
               $(icon_field).find('.pager').css('left', '98px');
-              $(icon_field).find('.pager').css('width', '160px');
+              $(icon_field).find('.pager').css('width', '170px');
               $(icon_field).find('ul.pagination').css('left', '-422px');
               $(icon_field).find('.pagination-items').css('top', '464px');
               break;
@@ -1253,7 +1201,7 @@
               $(icon_field).find('a.next').css('left', '273px');
               $(icon_field).find('a.angle-double-right').css('left', '323px');
               $(icon_field).find('.pager').css('left', '93px');
-              $(icon_field).find('.pager').css('width', '160px');
+              $(icon_field).find('.pager').css('width', '170px');
               $(icon_field).find('ul.pagination').css('left', '-458px');
               $(icon_field).find('.pagination-items').css('top', '464px');
               break;
@@ -1264,7 +1212,7 @@
               $(icon_field).find('a.next').css('left', '279px');
               $(icon_field).find('a.angle-double-right').css('left', '329px');
               $(icon_field).find('.pager').css('left', '95px');
-              $(icon_field).find('.pager').css('width', '163px');
+              $(icon_field).find('.pager').css('width', '173px');
               $(icon_field).find('ul.pagination').css('left', '-493px');
               $(icon_field).find('.pagination-items').css('top', '464px');
               break;
@@ -1275,7 +1223,7 @@
               $(icon_field).find('a.next').css('left', '277px');
               $(icon_field).find('a.angle-double-right').css('left', '327px');
               $(icon_field).find('.pager').css('left', '94px');
-              $(icon_field).find('.pager').css('width', '163px');
+              $(icon_field).find('.pager').css('width', '173px');
               $(icon_field).find('ul.pagination').css('left', '-528px');
               $(icon_field).find('.pagination-items').css('top', '464px');
               break;
@@ -1286,7 +1234,7 @@
               $(icon_field).find('a.next').css('left', '278px');
               $(icon_field).find('a.angle-double-right').css('left', '328px');
               $(icon_field).find('.pager').css('left', '92px');
-              $(icon_field).find('.pager').css('width', '165px');
+              $(icon_field).find('.pager').css('width', '175px');
               $(icon_field).find('ul.pagination').css('left', '-564px');
               $(icon_field).find('.pagination-items').css('top', '464px');
               break;
@@ -1297,7 +1245,7 @@
               $(icon_field).find('a.next').css('left', '281px');
               $(icon_field).find('a.angle-double-right').css('left', '331px');
               $(icon_field).find('.pager').css('left', '93px');
-              $(icon_field).find('.pager').css('width', '167px');
+              $(icon_field).find('.pager').css('width', '177px');
               $(icon_field).find('ul.pagination').css('left', '-599px');
               $(icon_field).find('.pagination-items').css('top', '464px');
               break;
@@ -1308,7 +1256,7 @@
               $(icon_field).find('a.next').css('left', '281px');
               $(icon_field).find('a.angle-double-right').css('left', '331px');
               $(icon_field).find('.pager').css('left', '91px');
-              $(icon_field).find('.pager').css('width', '169px');
+              $(icon_field).find('.pager').css('width', '179px');
               $(icon_field).find('ul.pagination').css('left', '-636px');
               $(icon_field).find('.pagination-items').css('top', '464px');
               break;
@@ -1319,7 +1267,7 @@
               $(icon_field).find('a.next').css('left', '283px');
               $(icon_field).find('a.angle-double-right').css('left', '333px');
               $(icon_field).find('.pager').css('left', '92px');
-              $(icon_field).find('.pager').css('width', '170px');
+              $(icon_field).find('.pager').css('width', '180px');
               $(icon_field).find('ul.pagination').css('left', '-673px');
               $(icon_field).find('.pagination-items').css('top', '464px');
               break;
@@ -1330,7 +1278,7 @@
               $(icon_field).find('a.next').css('left', '285px');
               $(icon_field).find('a.angle-double-right').css('left', '335px');
               $(icon_field).find('.pager').css('left', '92px');
-              $(icon_field).find('.pager').css('width', '172px');
+              $(icon_field).find('.pager').css('width', '182px');
               $(icon_field).find('ul.pagination').css('left', '-709px');
               $(icon_field).find('.pagination-items').css('top', '464px');
               break;
@@ -1341,7 +1289,7 @@
               $(icon_field).find('a.next').css('left', '282px');
               $(icon_field).find('a.angle-double-right').css('left', '332px');
               $(icon_field).find('.pager').css('left', '89px');
-              $(icon_field).find('.pager').css('width', '172px');
+              $(icon_field).find('.pager').css('width', '182px');
               $(icon_field).find('ul.pagination').css('left', '-747px');
               $(icon_field).find('.pagination-items').css('top', '464px');
               break;
@@ -1352,7 +1300,7 @@
               $(icon_field).find('a.next').css('left', '282px');
               $(icon_field).find('a.angle-double-right').css('left', '332px');
               $(icon_field).find('.pager').css('left', '89px');
-              $(icon_field).find('.pager').css('width', '172px');
+              $(icon_field).find('.pager').css('width', '182px');
               $(icon_field).find('ul.pagination').css('left', '-785px');
               $(icon_field).find('.pagination-items').css('top', '464px');
               break;
@@ -1363,7 +1311,7 @@
               $(icon_field).find('a.next').css('left', '284px');
               $(icon_field).find('a.angle-double-right').css('left', '334px');
               $(icon_field).find('.pager').css('left', '91px');
-              $(icon_field).find('.pager').css('width', '172px');
+              $(icon_field).find('.pager').css('width', '182px');
               $(icon_field).find('ul.pagination').css('left', '-823px');
               $(icon_field).find('.pagination-items').css('top', '464px');
               break;
@@ -1374,7 +1322,7 @@
               $(icon_field).find('a.next').css('left', '283px');
               $(icon_field).find('a.angle-double-right').css('left', '333px');
               $(icon_field).find('.pager').css('left', '90px');
-              $(icon_field).find('.pager').css('width', '172px');
+              $(icon_field).find('.pager').css('width', '182px');
               $(icon_field).find('ul.pagination').css('left', '-861px');
               $(icon_field).find('.pagination-items').css('top', '464px');
               break;
@@ -1385,7 +1333,7 @@
               $(icon_field).find('a.next').css('left', '280px');
               $(icon_field).find('a.angle-double-right').css('left', '330px');
               $(icon_field).find('.pager').css('left', '91px');
-              $(icon_field).find('.pager').css('width', '168px');
+              $(icon_field).find('.pager').css('width', '178px');
               $(icon_field).find('ul.pagination').css('left', '-899px');
               $(icon_field).find('.pagination-items').css('top', '464px');
               break;
@@ -1396,7 +1344,7 @@
               $(icon_field).find('a.next').css('left', '283px');
               $(icon_field).find('a.angle-double-right').css('left', '333px');
               $(icon_field).find('.pager').css('left', '94px');
-              $(icon_field).find('.pager').css('width', '168px');
+              $(icon_field).find('.pager').css('width', '178px');
               $(icon_field).find('ul.pagination').css('left', '-937px');
               $(icon_field).find('.pagination-items').css('top', '464px');
               break;
@@ -1407,7 +1355,7 @@
               $(icon_field).find('a.next').css('left', '282px');
               $(icon_field).find('a.angle-double-right').css('left', '332px');
               $(icon_field).find('.pager').css('left', '94px');
-              $(icon_field).find('.pager').css('width', '167px');
+              $(icon_field).find('.pager').css('width', '177px');
               $(icon_field).find('ul.pagination').css('left', '-975px');
               $(icon_field).find('.pagination-items').css('top', '464px');
               break;
@@ -1418,7 +1366,7 @@
               $(icon_field).find('a.next').css('left', '279px');
               $(icon_field).find('a.angle-double-right').css('left', '329px');
               $(icon_field).find('.pager').css('left', '91px');
-              $(icon_field).find('.pager').css('width', '167px');
+              $(icon_field).find('.pager').css('width', '177px');
               $(icon_field).find('ul.pagination').css('left', '-1013px');
               $(icon_field).find('.pagination-items').css('top', '464px');
               break;
@@ -1429,7 +1377,7 @@
               $(icon_field).find('a.next').css('left', '282px');
               $(icon_field).find('a.angle-double-right').css('left', '332px');
               $(icon_field).find('.pager').css('left', '93px');
-              $(icon_field).find('.pager').css('width', '168px');
+              $(icon_field).find('.pager').css('width', '178px');
               $(icon_field).find('ul.pagination').css('left', '-1050px');
               $(icon_field).find('.pagination-items').css('top', '464px');
               break;
@@ -1440,7 +1388,7 @@
               $(icon_field).find('a.next').css('left', '284px');
               $(icon_field).find('a.angle-double-right').css('left', '334px');
               $(icon_field).find('.pager').css('left', '93px');
-              $(icon_field).find('.pager').css('width', '170px');
+              $(icon_field).find('.pager').css('width', '180px');
               $(icon_field).find('ul.pagination').css('left', '-1086px');
               $(icon_field).find('.pagination-items').css('top', '464px');
               break;
@@ -1451,7 +1399,7 @@
               $(icon_field).find('a.next').css('left', '283px');
               $(icon_field).find('a.angle-double-right').css('left', '333px');
               $(icon_field).find('.pager').css('left', '92px');
-              $(icon_field).find('.pager').css('width', '170px');
+              $(icon_field).find('.pager').css('width', '180px');
               $(icon_field).find('ul.pagination').css('left', '-1123px');
               $(icon_field).find('.pagination-items').css('top', '464px');
               break;
@@ -1462,7 +1410,7 @@
               $(icon_field).find('a.next').css('left', '283px');
               $(icon_field).find('a.angle-double-right').css('left', '333px');
               $(icon_field).find('.pager').css('left', '92px');
-              $(icon_field).find('.pager').css('width', '170px');
+              $(icon_field).find('.pager').css('width', '180px');
               $(icon_field).find('ul.pagination').css('left', '-1160px');
               $(icon_field).find('.pagination-items').css('top', '464px');
               break;
@@ -1473,7 +1421,7 @@
               $(icon_field).find('a.next').css('left', '280px');
               $(icon_field).find('a.angle-double-right').css('left', '330px');
               $(icon_field).find('.pager').css('left', '89px');
-              $(icon_field).find('.pager').css('width', '170px');
+              $(icon_field).find('.pager').css('width', '180px');
               $(icon_field).find('ul.pagination').css('left', '-1198px');
               $(icon_field).find('.pagination-items').css('top', '464px');
               break;
@@ -1484,7 +1432,7 @@
               $(icon_field).find('a.next').css('left', '281px');
               $(icon_field).find('a.angle-double-right').css('left', '331px');
               $(icon_field).find('.pager').css('left', '89px');
-              $(icon_field).find('.pager').css('width', '171px');
+              $(icon_field).find('.pager').css('width', '181px');
               $(icon_field).find('ul.pagination').css('left', '-1236px');
               $(icon_field).find('.pagination-items').css('top', '464px');
               break;
@@ -1495,7 +1443,7 @@
               $(icon_field).find('a.next').css('left', '284px');
               $(icon_field).find('a.angle-double-right').css('left', '334px');
               $(icon_field).find('.pager').css('left', '94px');
-              $(icon_field).find('.pager').css('width', '169px');
+              $(icon_field).find('.pager').css('width', '179px');
               $(icon_field).find('ul.pagination').css('left', '-1273px');
               $(icon_field).find('.pagination-items').css('top', '464px');
               break;
@@ -1506,7 +1454,7 @@
               $(icon_field).find('a.next').css('left', '283px');
               $(icon_field).find('a.angle-double-right').css('left', '333px');
               $(icon_field).find('.pager').css('left', '91px');
-              $(icon_field).find('.pager').css('width', '171px');
+              $(icon_field).find('.pager').css('width', '181px');
               $(icon_field).find('ul.pagination').css('left', '-1310px');
               $(icon_field).find('.pagination-items').css('top', '464px');
               break;
@@ -1517,7 +1465,7 @@
               $(icon_field).find('a.next').css('left', '283px');
               $(icon_field).find('a.angle-double-right').css('left', '333px');
               $(icon_field).find('.pager').css('left', '90px');
-              $(icon_field).find('.pager').css('width', '172px');
+              $(icon_field).find('.pager').css('width', '182px');
               $(icon_field).find('ul.pagination').css('left', '-1348px');
               $(icon_field).find('.pagination-items').css('top', '464px');
               break;
@@ -1528,7 +1476,7 @@
               $(icon_field).find('a.next').css('left', '263px');
               $(icon_field).find('a.angle-double-right').css('left', '313px');
               $(icon_field).find('.pager').css('left', '110px');
-              $(icon_field).find('.pager').css('width', '133px');
+              $(icon_field).find('.pager').css('width', '153px');
               $(icon_field).find('ul.pagination').css('left', '-1387px');
               $(icon_field).find('.pagination-items').css('top', '464px');
               break;
@@ -1539,7 +1487,7 @@
               $(icon_field).find('a.next').css('left', '245px');
               $(icon_field).find('a.angle-double-right').css('left', '295px');
               $(icon_field).find('.pager').css('left', '129px');
-              $(icon_field).find('.pager').css('width', '96px');
+              $(icon_field).find('.pager').css('width', '106px');
               $(icon_field).find('ul.pagination').css('left', '-1424px');
               $(icon_field).find('.pagination-items').css('top', '464px');
               break;
@@ -1550,7 +1498,7 @@
               $(icon_field).find('a.next').css('left', '224px');
               $(icon_field).find('a.angle-double-right').css('left', '274px');
               $(icon_field).find('.pager').css('left', '145px');
-              $(icon_field).find('.pager').css('width', '59px');
+              $(icon_field).find('.pager').css('width', '69px');
               $(icon_field).find('ul.pagination').css('left', '-1461px');
               $(icon_field).find('.pagination-items').css('top', '464px');
               break;
@@ -1561,7 +1509,7 @@
               $(icon_field).find('a.next').css('left', '155px');
               $(icon_field).find('a.angle-double-right').css('left', '205px');
               $(icon_field).find('.pager').css('left', '110px');
-              $(icon_field).find('.pager').css('width', '24px');
+              $(icon_field).find('.pager').css('width', '34px');
               $(icon_field).find('ul.pagination').css('left', '-1500px');
               $(icon_field).find('.pagination-items').css('top', '116px');
               break;
