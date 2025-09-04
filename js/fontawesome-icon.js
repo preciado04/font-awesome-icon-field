@@ -9,6 +9,12 @@
 (function ($, Drupal, drupalSettings) {
   'use strict';
 
+  var current_page = 1;
+  var upcomingPage = 0;
+  var left = 0;
+  var fa_clases = [];
+  var attributes_added = true;
+
   /**
    * Wrapper for Drupal's once implementation.
    *
@@ -39,11 +45,6 @@
 
     return $(selector, context);
   }
-
-  var current_page = 1;
-  var left = 0;
-  var fa_clases = [];
-  var attributes_added = true;
 
   Drupal.behaviors.iconPicker = {
     attach: function (context, settings) {
@@ -90,8 +91,9 @@
           var font_awesome_icon_input = $(this).parent().parent().parent().parent().find('input[size="10000"]');
           var string = $(this).text();
 
-          if ($(this).data('string')) {
-            string = $(this).data('string');
+          const dataString = $(this).attr('data-string');
+          if (dataString) {
+            string = dataString;
           }
 
           $(font_awesome_icon_input).val(string);
@@ -809,55 +811,55 @@
           markup += '</div></div>';
 
           markup += '<div class="pagination-items">';
-          markup += '<a href="#" data-go-to-page="false" class="go-to-page angle-double-left" disabled="disabled"><i class="fa fa-angle-double-left"></i></a>';
-          markup += '<a href="#" data-go-to-page="false" class="go-to-page prev" disabled="disabled">Prev</a>';
-          markup += '<a href="#" data-go-to-page="false" class="go-to-page next">Next</a>';
-          markup += '<a href="#" data-go-to-page="false" class="go-to-page angle-double-right"><i class="fa fa-angle-double-right"></i></a>';
+          markup += '<a href="#" data-go-to-page="false" class="go-to-page angle-double-left" disabled="disabled" data-cta-type="jump-backward"><i class="fa fa-angle-double-left"></i></a>';
+          markup += '<a href="#" data-go-to-page="false" class="go-to-page prev" disabled="disabled" data-cta-type="prev">Prev</a>';
+          markup += '<a href="#" data-go-to-page="false" class="go-to-page next" data-cta-type="next">Next</a>';
+          markup += '<a href="#" data-go-to-page="false" class="go-to-page angle-double-right" data-cta-type="jump-forward"><i class="fa fa-angle-double-right"></i></a>';
           markup += '<div class="pager">';
           markup += '<ul class="pagination">';
-          markup += '<li class="page page-1 active"><a href="#" class="go-to-page">1</a></li>';
-          markup += '<li class="page page-2"><a href="#" class="go-to-page">2</a></li>';
-          markup += '<li class="page page-3"><a href="#" class="go-to-page">3</a></li>';
-          markup += '<li class="page page-4"><a href="#" class="go-to-page">4</a></li>';
-          markup += '<li class="page page-5"><a href="#" class="go-to-page">5</a></li>';
-          markup += '<li class="page page-6"><a href="#" class="go-to-page">6</a></li>';
-          markup += '<li class="page page-7"><a href="#" class="go-to-page">7</a></li>';
-          markup += '<li class="page page-8"><a href="#" class="go-to-page">8</a></li>';
-          markup += '<li class="page page-9"><a href="#" class="go-to-page">9</a></li>';
-          markup += '<li class="page page-10"><a href="#" class="go-to-page">10</a></li>';
-          markup += '<li class="page page-11"><a href="#" class="go-to-page">11</a></li>';
-          markup += '<li class="page page-12"><a href="#" class="go-to-page">12</a></li>';
-          markup += '<li class="page page-13"><a href="#" class="go-to-page">13</a></li>';
-          markup += '<li class="page page-14"><a href="#" class="go-to-page">14</a></li>';
-          markup += '<li class="page page-15"><a href="#" class="go-to-page">15</a></li>';
-          markup += '<li class="page page-16"><a href="#" class="go-to-page">16</a></li>';
-          markup += '<li class="page page-17"><a href="#" class="go-to-page">17</a></li>';
-          markup += '<li class="page page-18"><a href="#" class="go-to-page">18</a></li>';
-          markup += '<li class="page page-19"><a href="#" class="go-to-page">19</a></li>';
-          markup += '<li class="page page-20"><a href="#" class="go-to-page">20</a></li>';
-          markup += '<li class="page page-21"><a href="#" class="go-to-page">21</a></li>';
-          markup += '<li class="page page-22"><a href="#" class="go-to-page">22</a></li>';
-          markup += '<li class="page page-23"><a href="#" class="go-to-page">23</a></li>';
-          markup += '<li class="page page-24"><a href="#" class="go-to-page">24</a></li>';
-          markup += '<li class="page page-25"><a href="#" class="go-to-page">25</a></li>';
-          markup += '<li class="page page-26"><a href="#" class="go-to-page">26</a></li>';
-          markup += '<li class="page page-27"><a href="#" class="go-to-page">27</a></li>';
-          markup += '<li class="page page-28"><a href="#" class="go-to-page">28</a></li>';
-          markup += '<li class="page page-29"><a href="#" class="go-to-page">29</a></li>';
-          markup += '<li class="page page-30"><a href="#" class="go-to-page">30</a></li>';
-          markup += '<li class="page page-31"><a href="#" class="go-to-page">31</a></li>';
-          markup += '<li class="page page-32"><a href="#" class="go-to-page">32</a></li>';
-          markup += '<li class="page page-33"><a href="#" class="go-to-page">33</a></li>';
-          markup += '<li class="page page-34"><a href="#" class="go-to-page">34</a></li>';
-          markup += '<li class="page page-35"><a href="#" class="go-to-page">35</a></li>';
-          markup += '<li class="page page-36"><a href="#" class="go-to-page">36</a></li>';
-          markup += '<li class="page page-37"><a href="#" class="go-to-page">37</a></li>';
-          markup += '<li class="page page-38"><a href="#" class="go-to-page">38</a></li>';
-          markup += '<li class="page page-39"><a href="#" class="go-to-page">39</a></li>';
-          markup += '<li class="page page-40"><a href="#" class="go-to-page">40</a></li>';
-          markup += '<li class="page page-41"><a href="#" class="go-to-page">41</a></li>';
-          markup += '<li class="page page-42"><a href="#" class="go-to-page">42</a></li>';
-          markup += '<li class="page page-43"><a href="#" class="go-to-page">43</a></li>';
+          markup += '<li class="page page-1 active"><a href="#" class="go-to-page" data-cta-type="page">1</a></li>';
+          markup += '<li class="page page-2"><a href="#" class="go-to-page" data-cta-type="page">2</a></li>';
+          markup += '<li class="page page-3"><a href="#" class="go-to-page" data-cta-type="page">3</a></li>';
+          markup += '<li class="page page-4"><a href="#" class="go-to-page" data-cta-type="page">4</a></li>';
+          markup += '<li class="page page-5"><a href="#" class="go-to-page" data-cta-type="page">5</a></li>';
+          markup += '<li class="page page-6"><a href="#" class="go-to-page" data-cta-type="page">6</a></li>';
+          markup += '<li class="page page-7"><a href="#" class="go-to-page" data-cta-type="page">7</a></li>';
+          markup += '<li class="page page-8"><a href="#" class="go-to-page" data-cta-type="page">8</a></li>';
+          markup += '<li class="page page-9"><a href="#" class="go-to-page" data-cta-type="page">9</a></li>';
+          markup += '<li class="page page-10"><a href="#" class="go-to-page" data-cta-type="page">10</a></li>';
+          markup += '<li class="page page-11"><a href="#" class="go-to-page" data-cta-type="page">11</a></li>';
+          markup += '<li class="page page-12"><a href="#" class="go-to-page" data-cta-type="page">12</a></li>';
+          markup += '<li class="page page-13"><a href="#" class="go-to-page" data-cta-type="page">13</a></li>';
+          markup += '<li class="page page-14"><a href="#" class="go-to-page" data-cta-type="page">14</a></li>';
+          markup += '<li class="page page-15"><a href="#" class="go-to-page" data-cta-type="page">15</a></li>';
+          markup += '<li class="page page-16"><a href="#" class="go-to-page" data-cta-type="page">16</a></li>';
+          markup += '<li class="page page-17"><a href="#" class="go-to-page" data-cta-type="page">17</a></li>';
+          markup += '<li class="page page-18"><a href="#" class="go-to-page" data-cta-type="page">18</a></li>';
+          markup += '<li class="page page-19"><a href="#" class="go-to-page" data-cta-type="page">19</a></li>';
+          markup += '<li class="page page-20"><a href="#" class="go-to-page" data-cta-type="page">20</a></li>';
+          markup += '<li class="page page-21"><a href="#" class="go-to-page" data-cta-type="page">21</a></li>';
+          markup += '<li class="page page-22"><a href="#" class="go-to-page" data-cta-type="page">22</a></li>';
+          markup += '<li class="page page-23"><a href="#" class="go-to-page" data-cta-type="page">23</a></li>';
+          markup += '<li class="page page-24"><a href="#" class="go-to-page" data-cta-type="page">24</a></li>';
+          markup += '<li class="page page-25"><a href="#" class="go-to-page" data-cta-type="page">25</a></li>';
+          markup += '<li class="page page-26"><a href="#" class="go-to-page" data-cta-type="page">26</a></li>';
+          markup += '<li class="page page-27"><a href="#" class="go-to-page" data-cta-type="page">27</a></li>';
+          markup += '<li class="page page-28"><a href="#" class="go-to-page" data-cta-type="page">28</a></li>';
+          markup += '<li class="page page-29"><a href="#" class="go-to-page" data-cta-type="page">29</a></li>';
+          markup += '<li class="page page-30"><a href="#" class="go-to-page" data-cta-type="page">30</a></li>';
+          markup += '<li class="page page-31"><a href="#" class="go-to-page" data-cta-type="page">31</a></li>';
+          markup += '<li class="page page-32"><a href="#" class="go-to-page" data-cta-type="page">32</a></li>';
+          markup += '<li class="page page-33"><a href="#" class="go-to-page" data-cta-type="page">33</a></li>';
+          markup += '<li class="page page-34"><a href="#" class="go-to-page" data-cta-type="page">34</a></li>';
+          markup += '<li class="page page-35"><a href="#" class="go-to-page" data-cta-type="page">35</a></li>';
+          markup += '<li class="page page-36"><a href="#" class="go-to-page" data-cta-type="page">36</a></li>';
+          markup += '<li class="page page-37"><a href="#" class="go-to-page" data-cta-type="page">37</a></li>';
+          markup += '<li class="page page-38"><a href="#" class="go-to-page" data-cta-type="page">38</a></li>';
+          markup += '<li class="page page-39"><a href="#" class="go-to-page" data-cta-type="page">39</a></li>';
+          markup += '<li class="page page-40"><a href="#" class="go-to-page" data-cta-type="page">40</a></li>';
+          markup += '<li class="page page-41"><a href="#" class="go-to-page" data-cta-type="page">41</a></li>';
+          markup += '<li class="page page-42"><a href="#" class="go-to-page" data-cta-type="page">42</a></li>';
+          markup += '<li class="page page-43"><a href="#" class="go-to-page" data-cta-type="page">43</a></li>';
           markup += '</ul>';
           markup += '</div></div>';
 
@@ -871,176 +873,213 @@
         }
 
         /**
-         * Function to display links are right side.
-         */
-        $(document).on('click', 'a.angle-double-left', function (e) {
-          e.preventDefault();
-
-          var icon_field = $(this).parent().parent().parent();
-          current_page = parseInt($(icon_field).attr('data-current-page'), 10);
-
-          if (current_page == 2) {
-            current_page = current_page - 1;
-          }
-          else if (current_page == 3) {
-            current_page = current_page - 2;
-          }
-          else if (current_page == 4) {
-            current_page = current_page - 3;
-          }
-          else if (current_page == 5) {
-            current_page = current_page - 4;
-          }
-          else if (current_page == 43) {
-            current_page = current_page - 2;
-          }
-          else {
-            current_page = current_page - 5;
-          }
-
-          $(icon_field).find('.page.active').removeClass('active');
-          $(icon_field).find('.page-' + current_page).addClass('active');
-          $(icon_field).attr('data-current-page', current_page);
-          updatePaginationItemStyles(icon_field);
-          if (current_page == 1 && attributes_added == false) {
-            $('a.angle-double-left, a.prev').attr('disabled', 'disabled');
-            attributes_added = true;
-          }
-          if (current_page == 41 && attributes_added == true) {
-            $('a.next, a.angle-double-right').removeAttr('disabled');
-            attributes_added = false;
-          }
-        });
-
-        /**
-         * Function to go to prev page.
-         */
-        $(document).on('click', 'a.prev', function (e) {
-          e.preventDefault();
-
-          if (current_page == 1) {
-            return false;
-          }
-
-          var icon_field = $(this).parent().parent().parent();
-          current_page = parseInt($(icon_field).attr('data-current-page'), 10);
-          var prev_page = current_page - 1;
-          current_page = prev_page;
-          $(icon_field).find('.page.active').removeClass('active');
-          $(icon_field).find('.page-' + prev_page).addClass('active');
-          $(icon_field).attr('data-current-page', current_page);
-
-          updatePaginationItemStyles(icon_field);
-
-          if (current_page == 1 && attributes_added == false) {
-            $('a.angle-double-left, a.prev').attr('disabled', 'disabled');
-            attributes_added = true;
-          }
-
-          if (current_page == 42 && attributes_added == true) {
-            $('a.next, a.angle-double-right').removeAttr('disabled');
-            attributes_added = false;
-          }
-        });
-
-        /**
-         * Function to go to next page.
-         */
-        $(document).on('click', 'a.next', function (e) {
-          e.preventDefault();
-
-          var icon_field = $(this).parent().parent().parent();
-          current_page = parseInt($(icon_field).attr('data-current-page'), 10);
-          var next_page = current_page + 1;
-          current_page = next_page;
-          $(icon_field).find('.page.active').removeClass('active');
-          $(icon_field).find('.page-' + next_page).addClass('active');
-          $(icon_field).attr('data-current-page', current_page);
-
-          updatePaginationItemStyles(icon_field);
-
-          if (attributes_added == true) {
-            $('a.angle-double-left, a.prev').removeAttr('disabled');
-            attributes_added = false;
-          }
-
-          if (current_page == 43 && attributes_added == false) {
-            $('a.next, a.angle-double-right').attr('disabled', 'disabled');
-            attributes_added = true;
-          }
-        });
-
-        /**
-         * Function to display the pagination links are on left side.
-         */
-        $(document).on('click', 'a.angle-double-right', function (e) {
-          e.preventDefault();
-
-          var icon_field = $(this).parent().parent().parent();
-          current_page = parseInt($(icon_field).attr('data-current-page'), 10);
-          if (current_page == 41) {
-            current_page = current_page + 2;
-          }
-          else if (current_page == 42) {
-            current_page = current_page + 1;
-          }
-          else {
-            current_page = current_page + 5;
-          }
-
-          $(icon_field).find('.page.active').removeClass('active');
-          $(icon_field).find('.page-' + current_page).addClass('active');
-          $(icon_field).attr('data-current-page', current_page);
-
-          updatePaginationItemStyles(icon_field);
-
-          if (current_page > 1 && attributes_added == true) {
-            $('a.go-to-page').removeAttr('disabled');
-            attributes_added = false;
-          }
-
-          if (current_page == 43 && attributes_added == false) {
-            $('a.next, a.angle-double-right').attr('disabled', 'disabled');
-            attributes_added = true;
-          }
-        });
-
-        /**
          * Function to go to a new page.
          */
         $(document).on('click', 'a.go-to-page', function (e) {
           e.preventDefault();
 
-          if ($(this).data('go-to-page') == false) {
-            return false;
-          }
-
-          var icon_field = $(this).parent().parent().parent().parent().parent().parent();
+          var icon_field = $('.form-item[class*="field-font-awesome-icon"]');
           current_page = parseInt($(icon_field).attr('data-current-page'), 10);
-          var new_page = parseInt($(this).text(), 10);
-          current_page = new_page;
-          $(icon_field).find('.page.active').removeClass('active');
-          $(icon_field).find('.page-' + current_page).addClass('active');
-          $(icon_field).attr('data-current-page', current_page);
 
-          updatePaginationItemStyles(icon_field);
+          const ctaType = $(this).attr('data-cta-type');
+          switch (ctaType) {
+            case 'jump-backward':
+              jumpBackward(icon_field, current_page);
+              break;
 
-          if (current_page > 1 && attributes_added == true) {
-            $('a.go-to-page').removeAttr('disabled');
-            attributes_added = false;
+            case 'prev':
+              prev(icon_field, current_page);
+              break;
+
+            case 'next':
+              next(icon_field, current_page);
+              break;
+
+            case 'jump-forward':
+              jumpForward(icon_field, current_page);
+              break;
+
+            case 'page':
+              goToSelectedPage(icon_field, current_page, this);
+              break;
           }
 
-          if (current_page == 43 && attributes_added == false) {
-            $('a.next, a.angle-double-right').attr('disabled', 'disabled');
-            attributes_added = true;
+          switch (true) {
+            case upcomingPage == 1:
+              $('a.angle-double-left, a.prev').attr('disabled', 'disabled');
+              break;
+
+            case upcomingPage == 2:
+              $('a.angle-double-left').attr('disabled', 'disabled');
+              $('a.prev').removeAttr('disabled');
+              break;
+
+            case upcomingPage >= 3 && upcomingPage <= 40:
+              $('a.angle-double-left').removeAttr('disabled');
+              break;
+
+            case upcomingPage == 41:
+              $('a.next, a.angle-double-right').removeAttr('disabled');
+              break;
+
+            case upcomingPage == 42:
+              $('a.angle-double-right').attr('disabled', 'disabled');
+              $('a.next').removeAttr('disabled');
+              break;
+
+            case upcomingPage == 43:
+              $('a.next, a.angle-double-right').attr('disabled', 'disabled');
+              break;
+          }
+
+          if (upcomingPage >= 43) {
+            toggleLastPageClass('add');
+          }
+          else {
+            toggleLastPageClass('remove')
           }
         });
 
         /**
+         * Jumps backward.
+         */
+        function jumpBackward(icon_field, current_page) {
+          switch(true) {
+            case current_page == 1:
+            case current_page == 2:
+              return;
+
+            case current_page == 3:
+              current_page = current_page - 2;
+              break;
+
+            case current_page == 4:
+              current_page = current_page - 3;
+              break;
+
+            case current_page == 5:
+              current_page = current_page - 4;
+              break;
+
+            case current_page == 43:
+              current_page = current_page - 2;
+              break;
+
+            default:
+              current_page = current_page - 5;
+              break;
+          }
+          upcomingPage = current_page;
+
+          $(icon_field).find('.page.active').removeClass('active');
+          $(icon_field).find('.page-' + current_page).addClass('active');
+          $(icon_field).attr('data-current-page', current_page);
+
+          updatePaginationItemStyles(icon_field, upcomingPage);
+        }
+
+        /**
+         * Goes to previous page.
+         */
+        function prev(icon_field, current_page) {
+          if (current_page == 1) {
+            return false;
+          }
+
+          var prev_page = current_page - 1;
+          current_page = prev_page;
+          upcomingPage = prev_page;
+
+          $(icon_field).find('.page.active').removeClass('active');
+          $(icon_field).find('.page-' + prev_page).addClass('active');
+          $(icon_field).attr('data-current-page', current_page);
+
+          updatePaginationItemStyles(icon_field, upcomingPage);
+        }
+
+        /**
+         * Goes to next page.
+         */
+        function next(icon_field, current_page) {
+          if (current_page === 43) {
+            return;
+          }
+
+          var next_page = current_page + 1;
+          current_page = next_page;
+          upcomingPage = next_page;
+          $(icon_field).find('.page.active').removeClass('active');
+          $(icon_field).find('.page-' + next_page).addClass('active');
+          $(icon_field).attr('data-current-page', current_page);
+
+          updatePaginationItemStyles(icon_field, upcomingPage);
+        }
+
+        /**
+         * Jumps forward.
+         */
+        function jumpForward(icon_field, current_page) {
+          switch (current_page) {
+            case 41:
+              current_page = current_page + 2;
+              break;
+
+            case 42:
+            case 43:
+              return;
+
+            default:
+              current_page = current_page + 5;
+              break;
+          }
+          upcomingPage = current_page;
+
+          $(icon_field).find('.page.active').removeClass('active');
+          $(icon_field).find('.page-' + current_page).addClass('active');
+          $(icon_field).attr('data-current-page', current_page);
+
+          updatePaginationItemStyles(icon_field, upcomingPage);
+        }
+
+        /**
+         * Goes to selected page.
+         */
+        function goToSelectedPage(icon_field, current_page, _this = null) {
+          var new_page = parseInt($(_this).text(), 10);
+          current_page = new_page;
+          upcomingPage = new_page;
+
+          $(icon_field).find('.page.active').removeClass('active');
+          $(icon_field).find('.page-' + current_page).addClass('active');
+          $(icon_field).attr('data-current-page', current_page);
+
+          updatePaginationItemStyles(icon_field, upcomingPage);
+        }
+
+        /**
+         * Toggle last-page class.
+         */
+        function toggleLastPageClass(action) {
+          const parentSelector = '.form-item[class*="field-font-awesome-icon"].icons-active';
+          const parentElement = document.querySelector(parentSelector);
+          if (parentElement) {
+            switch (action) {
+              case 'add':
+                parentElement.classList.add('last-page');
+                break;
+
+              case 'remove':
+                parentElement.classList.remove('last-page');
+                break;
+            }
+          }
+        }
+
+        /**
          * Function to update pagination item styles.
          */
-        function updatePaginationItemStyles(icon_field) {
-          switch (current_page) {
+        function updatePaginationItemStyles(icon_field, upcomingPage) {
+          switch (upcomingPage) {
             case 1:
               $(icon_field).find('a.angle-double-left').css('left', '24px');
               $(icon_field).find('a.prev').css('left', '59px');

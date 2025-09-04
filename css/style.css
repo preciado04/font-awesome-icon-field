@@ -170,7 +170,11 @@
 
 .form-item[class*="field-font-awesome-icon"].icons-active {
   position: relative;
-  padding-bottom: 525px;
+  padding-bottom: 442px;
+}
+
+.form-item[class*="field-font-awesome-icon"].icons-active.last-page {
+  padding-bottom: 94px;
 }
 
 .form-item[class*="field-font-awesome-icon"].autocomplete-active {
