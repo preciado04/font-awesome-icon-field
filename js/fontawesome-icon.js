@@ -1020,6 +1020,14 @@
          */
         function jumpForward(icon_field, current_page) {
           switch (current_page) {
+            case 39:
+              current_page = current_page + 4;
+              break;
+
+            case 40:
+              current_page = current_page + 3;
+              break;
+
             case 41:
               current_page = current_page + 2;
               break;
