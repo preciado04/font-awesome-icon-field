@@ -962,7 +962,7 @@
               break;
 
             case current_page == 43:
-              current_page = current_page - 2;
+              current_page = current_page - 3;
               break;
 
             default:
