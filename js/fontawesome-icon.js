@@ -929,6 +929,7 @@
 
             case upcomingPage == 43:
               $('a.next, a.angle-double-right').attr('disabled', 'disabled');
+              $('a.prev').removeAttr('disabled');
               break;
           }
 
